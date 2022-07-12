@@ -31,12 +31,12 @@ void loop(){
   Serial.print("Temperature: ");
   Serial.print(temperature+25);
   Serial.println(" *C");
-//  lcd.clear();
+  lcd.clear();
   lcd.setCursor(0,0);
-  lcd.println(temperature+25);
-  lcd.println(" ");
-  lcd.println(char(223));
-  lcd.println("C");
+  lcd.print(temperature+25);
+  lcd.print(" ");
+  lcd.print(char(223));
+  lcd.print("C");
 
   
   char* host = "192.168.1.150"; //change your to your IP
@@ -44,7 +44,6 @@ void loop(){
   int port = 80;
   String tempData="";
   String device_name = "340722SPE0212022";
-//  String temprature =  temperature;
   tempData = "device="+device_name+"&temprature="+(String)temperature;
 
     if(temperature<35){
@@ -52,7 +51,8 @@ void loop(){
       digitalWrite(redLED, 0);
       digitalWrite(greenLED, 1);
       digitalWrite(buzzer, 0); 
-      lcd.println("Normal");
+      lcd.setCursor(0,1);
+      lcd.print("Normal");
      
     }
     else{
@@ -61,21 +61,11 @@ void loop(){
       digitalWrite(greenLED, 0);
       digitalWrite(buzzer, 1); 
       sendMyData(port, host, path, tempData);
-      //call the function for data uploading.
-      lcd.println("Abnormal");
+      lcd.setCursor(0,1);
+      lcd.print("Abnormal");
     
       delay(50);
     }  
-
-//  String request = "POST /iot?device=340722SPE0212022&temperature="+(String)temperature+" HTTP/1.1";
-//  wifiClient.connect(host, port);
-//  wifiClient.println(request);
-//  wifiClient.println("Host: "+host);
-//  wifiClient.println("User-Agent: ESP8266/1.0");
-//  wifiClient.println("C: ESP8266/1.0");
-//  wifiClient.println();
-//  Serial.println("Response: "+wifiClient.readStringUntil('\n'));
-//   delay(500);
 }
 
 void sendMyData(const int httpPort, const char* host,const char* filepath , String data){
