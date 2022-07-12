@@ -1,6 +1,7 @@
 #include<Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <ESP8266WiFi.h>
+
 WiFiClient wifiClient;
 #define redLED 14
 #define greenLED 16
@@ -28,10 +29,9 @@ void loop(){
   float vcc = 5.0;
   float voltage = rawData * (vcc / 1024.0);
   float temperature = voltage * 100;
-  Serial.print("Temperature: ");
-  Serial.print(temperature+25);
-  Serial.println(" *C");
-  lcd.clear();
+//  Serial.print("Temperature: ");
+//  Serial.print(temperature+25);
+//  Serial.println(" *C");
   lcd.setCursor(0,0);
   lcd.print(temperature+25);
   lcd.print(" ");
@@ -51,9 +51,8 @@ void loop(){
       digitalWrite(redLED, 0);
       digitalWrite(greenLED, 1);
       digitalWrite(buzzer, 0); 
-      lcd.setCursor(0,1);
-      lcd.print("Normal");
-     
+//      lcd.setCursor(0,1);
+//      lcd.print("Normal");     
     }
     else{
     
@@ -61,10 +60,8 @@ void loop(){
       digitalWrite(greenLED, 0);
       digitalWrite(buzzer, 1); 
       sendMyData(port, host, path, tempData);
-      lcd.setCursor(0,1);
-      lcd.print("Abnormal");
-    
-      delay(50);
+//      lcd.setCursor(0,1);
+//      lcd.print("Abnormal");
     }  
 }
 
